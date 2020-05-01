@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  php:
+    build:
+      context: docker/php-dev
+    user: "1000:1000"
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_SECRET: ${APP_SECRET}
+    volumes:
+      - .:/app
+
+  nginx:
+    build:
+      context: docker/nginx
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./public:/app/public
