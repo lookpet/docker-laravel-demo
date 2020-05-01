@@ -1,8 +1,17 @@
+export GIT_SHA := $(shell git rev-parse HEAD)
+
 docker-build-php:
 	$(call about,Build develop PHP image)
 	docker build \
 		-t my-super-app-tag \
 		-f docker/php-dev/Dockerfile \
+		.
+
+docker-build-nginx:
+	$(call about,Build NGINX image)
+	docker build \
+		-t nginx:$(GIT_SHA) \
+		-f docker/nginx/Dockerfile \
 		.
 
 docker-run-php:
